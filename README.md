@@ -60,7 +60,7 @@ Preparatory tasks:
 - [ ] You have read the “ID2203 –Distributed Systems, Advanced - Course Project – VT24 P3” document, and read the “Grading” information.
 
 Mandatory project tasks:
-- [ ] Your project has implemented sequentially consistent operations on top of CvRDTs. 
+- [ ] Your project has implemented sequentially consistent operations on top of CvRDTs.
   - You can use/fork this repository as a template to get started.
   - Your solution works correctly even when nodes fail and recover.
 - [ ] Your project uses GitHub for the collaboration.
@@ -98,3 +98,6 @@ Bonus tasks, for higher grades, 3 of the following:
 ```
 sbt run
 ```
+
+## Further Notes
+Your project should implement a key-value store interface with "on-demand" sequentially consistent operations. It should provide a key-value store interface, . There should be several parallel/distributed actors that each handle operations for this key-value store (based on eventually consistent CRDTs). Additionally to this, there should be a way to execute a set of operations in a sequentially consistent manner. Not all operations need to be sequentially consistent, only grouped operations that are marked as `Atomic` should be executed in a sequentially consistent manner w.r.t. all other operations.
