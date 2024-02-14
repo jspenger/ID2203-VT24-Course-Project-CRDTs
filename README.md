@@ -12,7 +12,9 @@ The task is to implement a sequentially consistent operation `Atomic { Read | Wr
 Consider a CvRDT based Key-Value map (LWWMap). The LWWMap is by design eventually consistent. Concurrent operations to the LWWMap may be executed such that strange intermediate states are observed. For example: consider three processes, A, B, C, for which A and B write, and C reads: `A writes {x = a; y = a}`, and `B writes { x = b; y = b }`. C concurrently reads the state and observes `C reads {x = a; y= b}`. This level of consistency may be acceptable for some applications, but some applications (e.g. Shopping Cart, Bank Account) would require stronger consistency levels, i.e. `C reads {x = a; y = a}` or `C reads {x = b; y = b}`. 
 
 ## Problem definition and suggested algorithms
-You are given a set of *Actors* that each consume a stream of operations. The operations modify the local LWWMap CvRDT state of each actor. Regularly, the actors will exchange their local state with each other in order to (eventually) merge the state. The task is to enable the actors to execute additional operations `Atomic { OP }` under sequential consistency. This is done through implementing additional communication between the actors. You are free to choose the algorithm to implement it. We recommend to implement a lock-based algorithm, or to follow the proposed algorithm in OACP. Note that the following algorithm has some issues with potential deadlocks, fix these issues to ensure that your protocol will not deadlock, and that your protocol behaves well even when some nodes go offline (i.e. become unavailable). Note that you should amend the below algorithm to make it correct and efficient.
+You are given a set of *Actors* that each consume a stream of operations. The operations modify the local LWWMap CvRDT state of each actor. Regularly, the actors will exchange their local state with each other in order to (eventually) merge the state. The task is to enable the actors to execute additional operations `Atomic { OP }` under sequential consistency. This is done through implementing additional communication between the actors. You are free to choose the algorithm to implement it. We recommend to implement a lock-based algorithm, or to follow the proposed algorithm in OACP. 
+
+Note that the following algorithm has some issues with potential deadlocks, fix these issues to ensure that your protocol will not deadlock, and that your protocol behaves well even when some nodes go offline (i.e. one node that holds a lock may go offline or crash, your system should be able to recover from this). Note that you should amend the below suggested algorithm to make it correct and efficient, or come up with one on your own.
 
 ```
 -- Simplified Lock-based Sequential Operations --
@@ -60,6 +62,7 @@ Preparatory tasks:
 Mandatory project tasks:
 - [ ] Your project has implemented sequentially consistent operations on top of CvRDTs. 
   - You can use/fork this repository as a template to get started.
+  - Your solution works correctly even when nodes fail and recover.
 - [ ] Your project uses GitHub for the collaboration.
   - The commits are balanced among group members.
   - Your project is private (for the duration of the course VT24, you can make it public later).
@@ -70,7 +73,10 @@ Mandatory project tasks:
   - A statement of contributions: who has done what.
 - [ ] Your solution is documented.
 - [ ] Your solution is appropriately tested.
+  - You have tested its correctness.
 - [ ] Your solution has an appropriate performance evaluation.
+  - Your evaluation compares it against other non-CRDT based alternatives.
+- [ ] You have put in an appropriate amount of effort.
 
 Mandatory administrative tasks:
 - [ ] You have registered your project.
